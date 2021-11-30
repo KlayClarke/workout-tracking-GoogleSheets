@@ -34,22 +34,25 @@ SHEETY_PROJECT_NAME = os.environ.get('SHEETY_PROJECT_NAME')
 
 sheety_endpoint = f'https://api.sheety.co/{SHEETY_USERNAME}/{SHEETY_PROJECT_NAME}'
 
-now = datetime.now()
-now_date = now.strftime('%d/%m/%Y')
-now_time = now.strftime('%H:%M:%S')
+# now = datetime.now()
+# now_date = now.strftime('%d/%m/%Y')
+# now_time = now.strftime('%H:%M:%S')
+#
+# sheety_params = {
+#     'workout': {
+#         'date': now_date,
+#         'time': now_time,
+#         'exercise': exercise_name,
+#         'duration': exercise_duration,
+#         'calories': exercise_calories_burned,
+#     }
+# }
+#
+# sheety_response = requests.post(url=sheety_endpoint, json=sheety_params)
+# sheety_response.raise_for_status()
+# sheety_data = sheety_response.json()
+# print(sheety_data)
 
-sheety_params = {
-    'workout': {
-        'date': now_date,
-        'time': now_time,
-        'exercise': exercise_name,
-        'duration': exercise_duration,
-        'calories': exercise_calories_burned,
-    }
-}
-
-sheety_response = requests.post(url=sheety_endpoint, json=sheety_params)
-sheety_response.raise_for_status()
-sheety_data = sheety_response.json()
-
-print(sheety_data)
+sheety_delete = requests.delete(url='https://api.sheety.co/a99db41127fc507b26df34b1a69f67ad/workoutTracking/workouts/3')
+sheety_delete.raise_for_status()
+sheety_delete_data = sheety_delete.json()
