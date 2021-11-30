@@ -14,7 +14,7 @@ HEADERS = {
 exercise_endpoint = 'https://trackapi.nutritionix.com/v2/natural/exercise'
 
 exercise_params = {
-    'query': input('What did you do today to stay active?'),
+    'query': input('What did you do today to stay active?\n\n'),
     'gender': 'male',
     'weight_kg': 77,
     'height_cm': 170,
@@ -29,6 +29,7 @@ exercise_name = exercise_data['exercises'][0]['name']
 exercise_duration = exercise_data['exercises'][0]['duration_min']
 exercise_calories_burned = exercise_data['exercises'][0]['nf_calories']
 
+SHEETY_AUTH_TOKEN = os.environ.get('SHEETY_AUTH_TOKEN')
 SHEETY_USERNAME = os.environ.get('SHEETY_USERNAME')
 SHEETY_PROJECT_NAME = os.environ.get('SHEETY_PROJECT_NAME')
 
@@ -48,14 +49,19 @@ sheety_params = {
     }
 }
 
+sheety_header = {
+    'Authorization': SHEETY_AUTH_TOKEN
+}
 
 # To post data to Google Sheet
-sheety_response = requests.post(url=sheety_endpoint, json=sheety_params)
+sheety_response = requests.post(url=sheety_endpoint, json=sheety_params, headers=sheety_header)
 sheety_response.raise_for_status()
 sheety_data = sheety_response.json()
 print(sheety_data)
 
 # # To delete previously posted data from Google Sheet
-# sheety_delete = requests.delete(url='https://api.sheety.co/a99db41127fc507b26df34b1a69f67ad/workoutTracking/workouts/3')
+# sheety_delete = requests.delete(url=f'https://api.sheety.co/{SHEETY_USERNAME}/{SHEETY_PROJECT_NAME}'
+#                                     '/2',
+#                                 headers=sheety_header)
 # sheety_delete.raise_for_status()
 # sheety_delete_data = sheety_delete.json()
